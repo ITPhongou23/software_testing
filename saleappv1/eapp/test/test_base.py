@@ -42,3 +42,10 @@ def sample_products(test_session):
     test_session.commit()
 
     return [p1,p2,p3,p4,p5]
+
+@pytest.fixture
+def moc_cloudinary(monkeypatch):
+    def fake_upload(file):
+        return {'secure_url': 'https:/fake_image.png'}
+
+    monkeypatch.setattr('cloudinary.uploader.upload', fake_upload)
